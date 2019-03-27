@@ -16,43 +16,79 @@ public class DatiCondivisi {
     
     private int daGenerare;
     private Vector ruote;
-    private Semaphore aspettoCheConta;
-    private Semaphore dicoCheHoGenerato;
+    
+    private Semaphore contatoPrimo;
+    private Semaphore generatoPrimo;
+    
+    private Semaphore contatoSecondo;
+    private Semaphore generatoSecondo;
     
     private int primoNumero;
     private int secondoNumero;
     
     public DatiCondivisi(int daGene, int primo, int secondo){
         daGenerare=daGene;
-        ruote=new Vector<CRuota>(daGene);
-        dicoCheHoGenerato = new Semaphore(0);
-        aspettoCheConta = new Semaphore(1);
+        ruote=new Vector<CRuota>(daGenerare);
+        generatoPrimo = new Semaphore(0);
+        contatoPrimo = new Semaphore(1);
+        
+        generatoSecondo = new Semaphore(0);
+        contatoSecondo = new Semaphore(1);
         
         primoNumero=primo;
         secondoNumero=secondo;
     }
     
-    public int getPrimoNumero(){
+    public synchronized String getNumeroDiRuoteVincenti(){
+        String ris="";
+        CRuota tmp;
+        for(int i=0; i<daGenerare;i++){
+            tmp=(CRuota)ruote.get(i);
+            if(tmp.ePresente(i)==true){
+                ris+="Ruota numero: "+i+1+"\n";
+            }
+        }
+        return ris;
+    }
+    
+    public String toString(){
+        String ris="";
+        CRuota tmp;
+        for(int i=0; i<daGenerare;i++){
+            tmp=(CRuota)ruote.get(i);
+            ris+=tmp.toString();
+        }
+        return ris;
+    }
+    
+    public synchronized int getPrimoNumero(){
         return primoNumero;
     }
     
-    public int getSecondoNumero(){
+    public synchronized int getSecondoNumero(){
         return secondoNumero;
     }
     
-    public CRuota getElement(int pos){
+    public synchronized CRuota getElement(int pos){
         return (CRuota) ruote.get(pos);
     }
     
-    public Semaphore aspettoCheConta(){
-        return aspettoCheConta;
+    
+    public synchronized Semaphore contatoPrimo(){
+        return contatoPrimo;
+    }
+    public synchronized Semaphore generatoPrimo(){
+        return generatoPrimo;
     }
     
-    public Semaphore dicoCheHoGenerato(){
-        return dicoCheHoGenerato;
+    public synchronized Semaphore contatoSecondo(){
+        return contatoSecondo;
+    }
+    public synchronized Semaphore generatoSecondo(){
+        return generatoSecondo;
     }
     
-    public int getDaGenerare(){
+    public synchronized int getDaGenerare(){
         return daGenerare;
     }
 }

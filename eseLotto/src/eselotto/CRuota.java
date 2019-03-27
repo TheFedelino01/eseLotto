@@ -15,18 +15,54 @@ import java.util.Vector;
 public class CRuota {
     private Vector estrazioni;
     private int elementi;
+    private int ambiPresenti;
     
     public CRuota(){
         elementi=5;
         estrazioni = new Vector<Integer>(elementi);
-        this.elementi=elementi;
+        ambiPresenti=0;
     }
     
-    public void genera(){
+    public synchronized void addAmbiPresenti(){
+        ambiPresenti++;
+    }
+    
+    
+    public boolean eVincente(){
+        if(ambiPresenti==2){
+            return true;
+        }
+        return false;
+    }
+    
+    public String toString(){
+        String ris="";
+        for(int i=0; i<elementi;i++){
+            ris+=estrazioni.get(i)+",";
+        }
+        return "{"+ris+"}";
+    }
+    
+    public synchronized void genera(){
         //Genero i numeri per l'estrazione
         Random rn = new Random();
         for(int i=0; i<elementi;i++){
             estrazioni.set(i, rn.nextInt(10));
         }
+    }
+    
+    
+    public synchronized boolean ePresente(int numero){
+        boolean ris=false;
+        
+        for(int i=0; i<estrazioni.size();i++){
+            if(estrazioni.elementAt(i).equals(numero)){
+                ris=true;
+            }else{
+                ris=false;
+            }
+        }
+        
+        return ris;
     }
 }

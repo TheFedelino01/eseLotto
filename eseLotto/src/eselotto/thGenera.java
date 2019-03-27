@@ -28,13 +28,16 @@ public class thGenera extends Thread{
         int i=0;
         while(i<daGenerare){
             try {
-                ptrDati.aspettoCheConta().acquire();//Aspetto che conta
+                ptrDati.contatoPrimo().acquire();//Aspetto che conta il primo e il secondo
+                ptrDati.contatoSecondo().acquire();
             } catch (InterruptedException ex) {
                 Logger.getLogger(thGenera.class.getName()).log(Level.SEVERE, null, ex);
             }
             ptrDati.getElement(i).genera();//Faccio generare gli elementi
             
-            ptrDati.dicoCheHoGenerato().release();//Dico che ho generato gli elementi e ora li faccio contare
+            ptrDati.generatoPrimo().release();//Dico che ho generatoPrimo gli elementi e ora li faccio contare
+            ptrDati.generatoSecondo().release();//Dico che ho generatoPrimo gli elementi e ora li faccio contare
+            i++;
         }
     }
 }
