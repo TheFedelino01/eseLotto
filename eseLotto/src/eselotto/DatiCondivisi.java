@@ -39,19 +39,23 @@ public class DatiCondivisi {
         secondoNumero=secondo;
     }
     
+    
+    public synchronized void push(CRuota nuova){
+        ruote.add(nuova);
+    }
     public synchronized String getNumeroDiRuoteVincenti(){
         String ris="";
         CRuota tmp;
-        for(int i=0; i<daGenerare;i++){
+        for(Integer i=0; i<daGenerare;i++){
             tmp=(CRuota)ruote.get(i);
-            if(tmp.ePresente(i)==true){
-                ris+="Ruota numero: "+i+1+"\n";
+            if(tmp.eVincente()==true){
+                ris+="Ruota numero: "+(i+1)+"\n";
             }
         }
         return ris;
     }
     
-    public String toString(){
+    public synchronized String toString(){
         String ris="";
         CRuota tmp;
         for(int i=0; i<daGenerare;i++){

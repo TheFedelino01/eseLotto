@@ -47,20 +47,21 @@ public class CRuota {
         //Genero i numeri per l'estrazione
         Random rn = new Random();
         for(int i=0; i<elementi;i++){
-            estrazioni.set(i, rn.nextInt(10));
+            estrazioni.add(rn.nextInt(10));
         }
     }
     
     
     public synchronized boolean ePresente(int numero){
         boolean ris=false;
-        
-        for(int i=0; i<estrazioni.size();i++){
+        int i=0;
+        while( i<estrazioni.size() && ris==false){
             if(estrazioni.elementAt(i).equals(numero)){
                 ris=true;
             }else{
                 ris=false;
             }
+            i++;
         }
         
         return ris;

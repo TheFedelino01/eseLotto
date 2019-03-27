@@ -33,6 +33,7 @@ public class thGenera extends Thread{
             } catch (InterruptedException ex) {
                 Logger.getLogger(thGenera.class.getName()).log(Level.SEVERE, null, ex);
             }
+            ptrDati.push(new CRuota());
             ptrDati.getElement(i).genera();//Faccio generare gli elementi
             
             ptrDati.generatoPrimo().release();//Dico che ho generatoPrimo gli elementi e ora li faccio contare
